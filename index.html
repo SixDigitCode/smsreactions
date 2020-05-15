@@ -1,0 +1,245 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+    <script>
+        function getReactionText(reaction_type, reacted_text) {
+            /*
+                reaction_type: "Liked", "Laughed at", or "Emphasized"
+            */
+            var finalstring = reaction_type;
+
+            if (reacted_text == "an image" || reacted_text == "a movie") {
+                finalstring += " " + reacted_text;
+            } else {
+                finalstring += " “" + reacted_text + "”";
+            }
+            return finalstring;
+        }
+
+        function handleClick(text) {
+            let reactee_type = document.getElementsByClassName("selected")[0].innerText.trim();
+            let reaction_text = "";
+            if (reactee_type == "Text") {
+                reaction_text = getReactionText(text, document.getElementById("source_text").value);
+            } else if (reactee_type == "Image") {
+                reaction_text = getReactionText(text, "an image");
+            } else {
+                reaction_text = getReactionText(text, "a movie");
+            }
+
+            document.getElementById("output_text").value = reaction_text;
+        }
+
+        function handleSelection(e) {
+            var elems = document.getElementsByClassName("reactee-chooser")[0].children;
+            for (var i = 0; i < elems.length; i++) {
+                elems[i].className = "reactee-chooser-item";
+            }
+            e.target.className = "reactee-chooser-item selected";
+            if (e.target.innerText.trim() == "Text") {
+                document.getElementById("source_text").style.display = "block";
+            } else {
+                document.getElementById("source_text").style.display = "none";
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #EEE;
+        }
+
+        #source_text {
+            width: 100%;
+            height: 20%;
+            resize: none;
+        }
+
+        #output_text {
+            width: 100%;
+            height: 20%;
+            resize: none;
+            margin-top: 1rem;
+        }
+
+        .heading {
+            font-family: 'Balsamiq Sans', cursive;
+            color: #444;
+            font-size: 1.5em;
+            margin-top: 1em;
+        }
+
+        .intro {
+            font-family: 'Balsamiq Sans', cursive;
+            color: #444;
+            margin-bottom: 1em;
+        }
+
+        .reactions-list {
+            background-color: white;
+            font-family: 'Balsamiq Sans', cursive;
+            margin-top: 1em;
+            border-radius: 1.3em;
+        }
+
+        .reactions-list .list-item {
+            padding: 0.4em;
+            padding-left: 0.7em;
+            height: 1.3em;
+            display: flex;
+            border-top: 1px solid #EEE;
+        }
+
+        .icon {
+            display: inline-flex;
+            height: 100%;
+            margin-top: auto;
+            align-items: center;
+            justify-content: center;
+            width: 1em;
+            font-size: 0.9em;
+        }
+
+        .text {
+            margin-top: 0.1rem;
+            margin-left: 0.4rem;
+            color: #808080;
+        }
+
+        .reactions-list .list-item img {
+
+            height: 80%;
+        }
+
+        .list-item.divider {
+            border-top-width: 5px;
+        }
+
+        .reactee-chooser {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            margin-bottom: 0.5em;
+        }
+
+        .reactee-chooser-item {
+            font-family: 'Balsamiq Sans', cursive;
+            font-size: 1.2em;
+            color: #444;
+        }
+
+        .selected {
+            color: #0098FF;
+            border-bottom: 3px solid #0098FF;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <h1 class="heading">The Reaction Generator</h1>
+        <div class="intro">
+            Tired of iOS users clogging up your group chats with endless "Liked" messages? Fight back with reactions of your own!
+        </div>
+        <div class="reactee-chooser">
+            <div class="reactee-chooser-item selected" onclick="handleSelection(event);">
+                Text
+            </div>
+            <div class="reactee-chooser-item" onclick="handleSelection(event);">
+                Image
+            </div>
+            <div class="reactee-chooser-item" onclick="handleSelection(event);">
+                Video
+            </div>
+        </div>
+        <textarea id="source_text" placeholder="Paste your message here"></textarea>
+        <div class="reactions-list">
+            <div class="list-item" onclick="handleClick('Loved');">
+                <div class="icon">
+                    <img src="images/loved.png">
+                </div>
+                <div class="text">
+                    Loved “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Liked');">
+                <div class="icon">
+                    <img src="images/liked.png">
+                </div>
+                <div class="text">
+                    Liked “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Disliked');">
+                <div class="icon">
+                    <img src="images/disliked.png">
+                </div>
+                <div class="text">
+                    Disliked “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Laughed at');">
+                <div class="icon">
+                    <img src="images/laughed_at.png">
+                </div>
+                <div class="text">
+                    Laughed at “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Emphasized');">
+                <div class="icon">
+                    <img src="images/emphasized.png">
+                </div>
+                <div class="text">
+                    Emphasized “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Questioned');">
+                <div class="icon">
+                    <img src="images/questioned.png">
+                </div>
+                <div class="text">
+                    Questioned “...”
+                </div>
+            </div>
+
+            <div class="list-item divider" onclick="handleClick('Screamed at');">
+                <div class="icon">
+                    😱
+                </div>
+                <div class="text">
+                    Screamed at “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Shrugged at');">
+                <div class="icon">
+                    🤷
+                </div>
+                <div class="text">
+                    Shrugged at “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Cringed at');">
+                <div class="icon">
+                    😬
+                </div>
+                <div class="text">
+                    Cringed at “...”
+                </div>
+            </div>
+            <div class="list-item" onclick="handleClick('Facepalmed at');">
+                <div class="icon">
+                    🤦
+                </div>
+                <div class="text">
+                    Facepalmed at “...”
+                </div>
+            </div>
+        </div>
+        <textarea id="output_text" placeholder="Your reaction will go here" readonly="readonly"></textarea>
+    </div>
+</body>
+
+</html>
